@@ -4,7 +4,8 @@ const colors = document.getElementsByClassName('jsColor')
 const range = document.getElementById('jsRange')
 const mode = document.getElementById('jsMode')
 const saveBtn = document.getElementById('jsSave')
-
+const ResetBtn = document.getElementById('jsReset')
+const Eraser = document.getElementById('jsEraser')
 
 const INITIAL_COLOR = '#2c2c2c'
 const CANVAS_SIZE = 700
@@ -67,6 +68,7 @@ function handleModeClick(e) {
         filling = true
         mode.innerText= 'Paint'
     }
+    mode.innerText = 'Fill'
 }
 
 function handleCanvasClick(e) {
@@ -85,6 +87,17 @@ function handleSaveClick() {
     link.href = image
     link.download = 'PaintJS[EXPORT]'
     link.click()
+}
+
+function handleResetClick() {
+    ctx.fillStyle = 'white'
+    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+    range.value = 2.5
+
+}
+
+function handleEraserClick() {
+    console.log('hello')
 }
 
 if (canvas) {
@@ -108,4 +121,12 @@ if (mode) {
 
 if (saveBtn) {
     saveBtn.addEventListener('click', handleSaveClick)
+}
+
+if (ResetBtn) {
+    ResetBtn.addEventListener('click', handleResetClick)
+}
+
+if (Eraser) {
+    Eraser.addEventListener('click', handleEraserClick)
 }
