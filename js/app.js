@@ -1,6 +1,7 @@
 const canvas = document.getElementById('jsCanvas')
 const ctx = canvas.getContext('2d')
 const colors = document.getElementsByClassName('jsColor')
+const ColorsArray = Array.from(colors)
 const range = document.getElementById('jsRange')
 const mode = document.getElementById('jsMode')
 const saveBtn = document.getElementById('jsSave')
@@ -13,7 +14,7 @@ const CANVAS_SIZE = 700
 canvas.width = CANVAS_SIZE
 canvas.height = CANVAS_SIZE
 
-ctx.fillStyle = 'white'
+ctx.fillStyle = '#ffffff'
 ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
 ctx.strokeStyle = INITIAL_COLOR
 ctx.fillStyle = INITIAL_COLOR
@@ -52,7 +53,14 @@ function handleColorClick(e) {
     const color = e.target.style.backgroundColor;
     ctx.strokeStyle = color
     ctx.fillStyle = color
-    
+
+    this.classList.add('ColorActive')
+
+    ColorsArray.forEach((item, index) => {
+        if (ColorsArray[index].getAttribute('style').substr(18, 7) !== ctx.strokeStyle) {
+            ColorsArray[index].classList.remove('ColorActive')
+        }
+    })
 }
 
 function handleRangeChange(e) {
@@ -64,11 +72,13 @@ function handleModeClick(e) {
     if (filling === true) {
         filling = false
         mode.innerText = 'Fill'
+        canvas.classList.remove('ClickIcon')
     } else {
         filling = true
         mode.innerText= 'Paint'
+        canvas.classList.add('ClickIcon')
     }
-    mode.innerText = 'Fill'
+    
 }
 
 function handleCanvasClick(e) {
@@ -90,23 +100,27 @@ function handleSaveClick() {
 }
 
 function handleResetClick() {
-    ctx.fillStyle = 'white'
+    ctx.fillStyle = '#ffffff'
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
     range.value = 2.5
-
+    ColorsArray.forEach((item, index) => {
+        ColorsArray[index].classList.remove('ColorActive')
+    })
 }
 
 function handleEraserClick() {
-    console.log('hello')
+    ctx.strokeStyle = '#ffffff'
 }
 
 if (canvas) {
+    canvas.classList.remove('ClickIcon')
     canvas.addEventListener('mousemove', onMouseMove)
     canvas.addEventListener('mousedown', startPainting)
     canvas.addEventListener('mouseup', stopPainting)
     canvas.addEventListener('mouseleave', stopPainting)
     canvas.addEventListener('click', handleCanvasClick)
     canvas.addEventListener('contextmenu', handleCM)
+    
 }
 
 Array.from(colors).forEach(e => e.addEventListener('click', handleColorClick))
