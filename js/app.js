@@ -7,6 +7,7 @@ const mode = document.getElementById('jsMode')
 const saveBtn = document.getElementById('jsSave')
 const ResetBtn = document.getElementById('jsReset')
 const Eraser = document.getElementById('jsEraser')
+const Random = document.getElementById('jsRandom')
 
 const INITIAL_COLOR = '#2c2c2c'
 const CANVAS_SIZE = 700
@@ -14,7 +15,7 @@ const CANVAS_SIZE = 700
 canvas.width = CANVAS_SIZE
 canvas.height = CANVAS_SIZE
 
-ctx.fillStyle = '#ffffff'
+ctx.fillStyle = 'white'
 ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
 ctx.strokeStyle = INITIAL_COLOR
 ctx.fillStyle = INITIAL_COLOR
@@ -100,7 +101,7 @@ function handleSaveClick() {
 }
 
 function handleResetClick() {
-    ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = 'white'
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
     range.value = 2.5
     ColorsArray.forEach((item, index) => {
@@ -109,7 +110,22 @@ function handleResetClick() {
 }
 
 function handleEraserClick() {
-    ctx.strokeStyle = '#ffffff'
+    ctx.strokeStyle = 'white'
+}
+
+function handleRandomClick() {
+    let RandomNumber = Math.floor(ColorsArray.length * Math.random());
+    
+    ctx.strokeStyle = ColorsArray[RandomNumber].getAttribute('style').substr(18, 7)
+    ctx.fillStyle = ColorsArray[RandomNumber].getAttribute('style').substr(18, 7)
+
+    ColorsArray.forEach((item, index) => {
+        if (ColorsArray[index].getAttribute('style').substr(18, 7) === ctx.strokeStyle) {
+            ColorsArray[index].classList.add('ColorActive')
+        } else {
+            ColorsArray[index].classList.remove('ColorActive')
+        }
+    })
 }
 
 if (canvas) {
@@ -143,4 +159,8 @@ if (ResetBtn) {
 
 if (Eraser) {
     Eraser.addEventListener('click', handleEraserClick)
+}
+
+if (Random) {
+    Random.addEventListener('click', handleRandomClick)
 }
