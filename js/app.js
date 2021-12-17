@@ -95,8 +95,10 @@ function handleCM(e) {
 function handleSaveClick() {
     const image = canvas.toDataURL()
     const link = document.createElement('a')
+    const FileName = prompt('파일 이름을 기재')
+    
     link.href = image
-    link.download = 'PaintJS[EXPORT]'
+    link.download = FileName
     link.click()
 }
 
