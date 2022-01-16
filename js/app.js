@@ -42,9 +42,7 @@ function onMouseMove(e) {
         ctx.lineTo(x, y)
         ctx.stroke()
     }
-    
 }
-
 
 function onMouseup(e) {
     stopPainting()
@@ -137,8 +135,7 @@ if (canvas) {
     canvas.addEventListener('mouseup', stopPainting)
     canvas.addEventListener('mouseleave', stopPainting)
     canvas.addEventListener('click', handleCanvasClick)
-    canvas.addEventListener('contextmenu', handleCM)
-    
+    canvas.addEventListener('contextmenu', handleCM)   
 }
 
 Array.from(colors).forEach(e => e.addEventListener('click', handleColorClick))
